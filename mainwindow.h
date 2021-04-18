@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QDataStream>
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
@@ -18,6 +19,8 @@ public:
 
 private slots:
     void on_pushButton_clicked();
+
+    void on_pushButton_refresh_clicked();
 
 private:
     Ui::MainWindow* ui;

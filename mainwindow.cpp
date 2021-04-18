@@ -1,6 +1,8 @@
 #include "mainwindow.h"
+#include "datapkg.h"
+#include "mytcpsocket.h"
 #include "ui_mainwindow.h"
-
+#include <QMessageBox>
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -15,4 +17,22 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
+    ui->pushButton->setDisabled(true);
+    MyTcpSocket* socket = new MyTcpSocket(this);
+    bool flag = socket->connectStart(ui->lineEdit_Server->text(), quint16(ui->lineEdit_Port->text().toUInt()));
+    if (flag) {
+        QMessageBox msgBox;
+        msgBox.setText("连接成功");
+        msgBox.exec();
+    } else {
+        QMessageBox msgBox;
+        msgBox.setText("连接失败，请重试！");
+        msgBox.exec();
+        ui->pushButton->setDisabled(false);
+    }
+}
+
+void MainWindow::on_pushButton_refresh_clicked()
+{
+    //请求刷新文件
 }

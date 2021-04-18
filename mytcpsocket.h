@@ -1,21 +1,21 @@
 #ifndef MYTCPSOCKET_H
 #define MYTCPSOCKET_H
 
+#include "datapkg.h"
 #include <QTcpSocket>
-
-class MyTcpSocket : public QTcpSocket
-{
+class MyTcpSocket : public QTcpSocket {
     Q_OBJECT
 public:
-    MyTcpSocket();
+    MyTcpSocket(QObject* parent = nullptr);
     bool connectStart(QString ip, quint16 port);
-    bool sendMessage(QString msg);
+    bool sendMessage(DataPkg msg);
 signals:
-    void newMessage(QString msg);
+    void newMessage(DataPkg msg);
 private slots:
     void onReadyRead();
     void onConnected();
     void onDisconnected();
+    void handleMsg(DataPkg msg);
 };
 
 #endif // MYTCPSOCKET_H
