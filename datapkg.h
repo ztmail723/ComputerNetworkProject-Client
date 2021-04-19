@@ -8,7 +8,7 @@ class DataPkg {
 public:
     DataPkg();
     qint64 ID;
-    QVariant data;
+    QVector<QVariant> data;
     friend QDataStream& operator<<(QDataStream& output, const DataPkg& data) //序列化
     {
         output << data.ID << data.data;

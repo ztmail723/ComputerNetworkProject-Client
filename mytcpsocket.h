@@ -15,7 +15,7 @@ private slots:
     void onReadyRead();
     void onConnected();
     void onDisconnected();
-    void handleMsg(DataPkg msg);
+    void handleMsg(DataPkg pkg);
 };
 
 #endif // MYTCPSOCKET_H

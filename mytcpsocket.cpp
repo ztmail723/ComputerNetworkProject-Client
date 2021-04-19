@@ -1,4 +1,5 @@
 #include "mytcpsocket.h"
+#include "pkghandler.h"
 #include <QDataStream>
 MyTcpSocket::MyTcpSocket(QObject* parent)
     : QTcpSocket(parent)
@@ -6,6 +7,7 @@ MyTcpSocket::MyTcpSocket(QObject* parent)
     connect(this, &MyTcpSocket::connected, this, &MyTcpSocket::onConnected);
     connect(this, &MyTcpSocket::readyRead, this, &MyTcpSocket::onReadyRead);
     connect(this, &MyTcpSocket::disconnected, this, &MyTcpSocket::onDisconnected);
+    connect(this, &MyTcpSocket::newMessage, this, &MyTcpSocket::handleMsg);
     //connectStart(); //开始连接
 }
 
@@ -47,6 +49,8 @@ void MyTcpSocket::onDisconnected()
     qDebug() << "客户端与服务器断开连接";
 }
 
-void MyTcpSocket::handleMsg(DataPkg msg)
+void MyTcpSocket::handleMsg(DataPkg pkg)
 {
+    PkgHandler handler(this);
+    handler.handle(pkg);
 }
