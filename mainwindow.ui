@@ -34,19 +34,28 @@
       <item row="0" column="1">
        <widget class="QLabel" name="label_nowfile">
         <property name="text">
-         <string>text.txt</string>
+         <string/>
         </property>
        </widget>
       </item>
       <item row="2" column="0">
        <widget class="QPushButton" name="pushButton_suspend">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
          <string>暂停</string>
+        </property>
+        <property name="checkable">
+         <bool>false</bool>
         </property>
        </widget>
       </item>
       <item row="2" column="1">
        <widget class="QPushButton" name="pushButton_terminate">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
          <string>终止</string>
         </property>
@@ -124,6 +133,9 @@
       </item>
       <item>
        <widget class="QPushButton" name="pushButton_refresh">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
          <string>刷新文件列表</string>
         </property>
@@ -131,6 +143,9 @@
       </item>
       <item>
        <widget class="QPushButton" name="pushButton_receiveReq">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
          <string>请求接收文件</string>
         </property>
