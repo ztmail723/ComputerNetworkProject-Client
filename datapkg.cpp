@@ -1,18 +1,15 @@
 #include "datapkg.h"
 
-/*
-QDataStream& operator<<(QDataStream& output, const DataPkg& data)
+QDataStream& operator<<(QDataStream& output, const DataPkg& data) //序列化
 {
-    output << data.type << data.ID;
+    output << data.ID << data.data;
     return output;
 }
-
-QDataStream& operator>>(QDataStream& input, DataPkg& data)
+QDataStream& operator>>(QDataStream& input, DataPkg& data) //反序列化
 {
-    input >> data.type >> data.ID;
+    input >> data.ID >> data.data;
     return input;
 }
-*/
 
 DataPkg::DataPkg()
 {
