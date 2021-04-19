@@ -8,6 +8,7 @@ MainWindow::MainWindow(QWidget* parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    socket = new MyTcpSocket(this);
 }
 
 MainWindow::~MainWindow()
@@ -18,7 +19,6 @@ MainWindow::~MainWindow()
 void MainWindow::on_pushButton_clicked()
 {
     ui->pushButton->setDisabled(true);
-    MyTcpSocket* socket = new MyTcpSocket(this);
     bool flag = socket->connectStart(ui->lineEdit_Server->text(), quint16(ui->lineEdit_Port->text().toUInt()));
     if (flag) {
         QMessageBox msgBox;
@@ -35,4 +35,16 @@ void MainWindow::on_pushButton_clicked()
 void MainWindow::on_pushButton_refresh_clicked()
 {
     //请求刷新文件
+}
+
+void MainWindow::getFileList(QStringList list)
+{
+}
+
+void MainWindow::getFileHeader(QString fileName, quint64 fileCount)
+{
+}
+
+void MainWindow::getFileData(quint64 fileID, QByteArray fileData)
+{
 }

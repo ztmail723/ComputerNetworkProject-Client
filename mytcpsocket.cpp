@@ -8,7 +8,6 @@ MyTcpSocket::MyTcpSocket(QObject* parent)
     connect(this, &MyTcpSocket::readyRead, this, &MyTcpSocket::onReadyRead);
     connect(this, &MyTcpSocket::disconnected, this, &MyTcpSocket::onDisconnected);
     connect(this, &MyTcpSocket::newMessage, this, &MyTcpSocket::handleMsg);
-    //connectStart(); //开始连接
 }
 
 bool MyTcpSocket::connectStart(QString ip, quint16 port)

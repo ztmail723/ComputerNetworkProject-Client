@@ -1,9 +1,9 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "mytcpsocket.h"
 #include <QDataStream>
 #include <QMainWindow>
-
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -22,7 +22,12 @@ private slots:
 
     void on_pushButton_refresh_clicked();
 
+    void getFileList(QStringList list);
+    void getFileHeader(QString fileName, quint64 fileCount);
+    void getFileData(quint64 fileID, QByteArray fileData);
+
 private:
     Ui::MainWindow* ui;
+    MyTcpSocket* socket;
 };
 #endif // MAINWINDOW_H

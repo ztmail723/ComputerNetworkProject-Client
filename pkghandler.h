@@ -17,6 +17,11 @@ private:
 
 private:
     MyTcpSocket* socket;
+
+signals:
+    void sendFileList(QStringList list);
+    void sendFileHeader(QString fileName, quint64 fileCount);
+    void sendFileData(quint64 fileID, QByteArray fileData);
 };
 
 #endif // PKGHANDLER_H

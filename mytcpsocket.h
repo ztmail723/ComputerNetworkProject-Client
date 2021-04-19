@@ -5,12 +5,17 @@
 #include <QTcpSocket>
 class MyTcpSocket : public QTcpSocket {
     Q_OBJECT
+
 public:
     MyTcpSocket(QObject* parent = nullptr);
     bool connectStart(QString ip, quint16 port);
     bool sendMessage(DataPkg msg);
+
 signals:
     void newMessage(DataPkg msg);
+    void sendFileList(QStringList list);
+    void sendFileHeader(QString fileName, quint64 fileCount);
+    void sendFileData(quint64 fileID, QByteArray fileData);
 private slots:
     void onReadyRead();
     void onConnected();
