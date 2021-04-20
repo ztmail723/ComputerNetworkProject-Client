@@ -14,13 +14,15 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     mytcpsocket.cpp \
-    pkghandler.cpp
+    pkghandler.cpp \
+    pkgsender.cpp
 
 HEADERS += \
     datapkg.h \
     mainwindow.h \
     mytcpsocket.h \
-    pkghandler.h
+    pkghandler.h \
+    pkgsender.h
 
 FORMS += \
     mainwindow.ui
