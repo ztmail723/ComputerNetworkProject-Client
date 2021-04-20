@@ -1,7 +1,8 @@
 #include "pkghandler.h"
+#include "mytcpsocket.h"
 
 PkgHandler::PkgHandler(MyTcpSocket* socket)
-    : socket(socket)
+    : QObject(socket)
 {
     connect(this, &PkgHandler::sendFileList, socket, &MyTcpSocket::sendFileList);
     connect(this, &PkgHandler::sendFileHeader, socket, &MyTcpSocket::sendFileHeader);
@@ -28,7 +29,7 @@ void PkgHandler::handle(DataPkg& pkg)
 void PkgHandler::handle2001(DataPkg& pkg) //文件列表
 {
     QStringList list;
-    for (const auto& i : qAsConst(pkg.data)) {
+    for (QVariant& i : pkg.data) {
         list.append(i.toString());
     }
     emit sendFileList(list);
@@ -38,6 +39,9 @@ void PkgHandler::handle2002(DataPkg& pkg) //文件头
 {
     QString fileName = pkg.data[0].toString();
     quint64 fileCount = pkg.data[1].toUInt();
+    this->nowFile = new QFile(fileName);
+    this->nowFileCount = fileCount;
+    this->nowFile->open(QIODevice::WriteOnly);
     emit sendFileHeader(fileName, fileCount);
 }
 
@@ -45,5 +49,10 @@ void PkgHandler::handle2003(DataPkg& pkg)
 {
     quint64 fileID = pkg.data[0].toUInt();
     QByteArray fileData = pkg.data[1].toByteArray();
+    this->nowFile->write(fileData);
+    if (fileID == nowFileCount) {
+        this->nowFile->close();
+        delete this->nowFile;
+    }
     emit sendFileData(fileID, fileData);
 }
