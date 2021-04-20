@@ -1,9 +1,12 @@
 #include "mytcpsocket.h"
 #include "pkghandler.h"
+#include "pkgsender.h"
 #include <QDataStream>
 MyTcpSocket::MyTcpSocket(QObject* parent)
     : QTcpSocket(parent)
 {
+    this->handler = new PkgHandler(this);
+    this->sender = new PkgSender(this);
     connect(this, &MyTcpSocket::connected, this, &MyTcpSocket::onConnected);
     connect(this, &MyTcpSocket::readyRead, this, &MyTcpSocket::onReadyRead);
     connect(this, &MyTcpSocket::disconnected, this, &MyTcpSocket::onDisconnected);
@@ -50,6 +53,5 @@ void MyTcpSocket::onDisconnected()
 
 void MyTcpSocket::handleMsg(DataPkg pkg)
 {
-    PkgHandler handler(this);
-    handler.handle(pkg);
+    this->handler->handle(pkg);
 }

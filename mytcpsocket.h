@@ -2,6 +2,8 @@
 #define MYTCPSOCKET_H
 
 #include "datapkg.h"
+class PkgHandler;
+class PkgSender;
 #include <QTcpSocket>
 class MyTcpSocket : public QTcpSocket {
     Q_OBJECT
@@ -10,6 +12,10 @@ public:
     MyTcpSocket(QObject* parent = nullptr);
     bool connectStart(QString ip, quint16 port);
     bool sendMessage(DataPkg msg);
+
+private:
+    PkgHandler* handler;
+    PkgSender* sender;
 
 signals:
     void newMessage(DataPkg msg);
