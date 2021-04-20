@@ -9,6 +9,8 @@ MainWindow::MainWindow(QWidget* parent)
 {
     ui->setupUi(this);
     socket = new MyTcpSocket(this);
+    itemModel = new QStandardItemModel(this);
+    ui->fileListView->setModel(itemModel);
 }
 
 MainWindow::~MainWindow()
@@ -21,6 +23,8 @@ void MainWindow::on_pushButton_clicked()
     ui->pushButton->setDisabled(true);
     bool flag = socket->connectStart(ui->lineEdit_Server->text(), quint16(ui->lineEdit_Port->text().toUInt()));
     if (flag) {
+        ui->pushButton_refresh->setEnabled(true);
+        ui->pushButton_receiveReq->setEnabled(true);
         QMessageBox msgBox;
         msgBox.setText("连接成功");
         msgBox.exec();
@@ -39,6 +43,11 @@ void MainWindow::on_pushButton_refresh_clicked()
 
 void MainWindow::getFileList(QStringList list)
 {
+    this->itemModel->clear();
+    for (auto& i : list) {
+        QStandardItem* item = new QStandardItem(i);
+        this->itemModel->appendRow(item);
+    }
 }
 
 void MainWindow::getFileHeader(QString fileName, quint64 fileCount)
@@ -47,4 +56,7 @@ void MainWindow::getFileHeader(QString fileName, quint64 fileCount)
 
 void MainWindow::getFileData(quint64 fileID, QByteArray fileData)
 {
+    QMessageBox msgBox;
+    msgBox.setText("连接成功");
+    msgBox.exec();
 }

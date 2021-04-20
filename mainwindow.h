@@ -4,6 +4,7 @@
 #include "mytcpsocket.h"
 #include <QDataStream>
 #include <QMainWindow>
+#include <QStandardItemModel>
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -29,5 +30,6 @@ private slots:
 private:
     Ui::MainWindow* ui;
     MyTcpSocket* socket;
+    QStandardItemModel* itemModel;
 };
 #endif // MAINWINDOW_H
