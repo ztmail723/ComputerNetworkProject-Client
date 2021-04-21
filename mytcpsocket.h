@@ -5,13 +5,13 @@
 class PkgHandler;
 class PkgSender;
 #include <QTcpSocket>
-class MyTcpSocket : public QTcpSocket {
+class MyTcpSocket : public QTcpSocket
+{
     Q_OBJECT
 
 public:
     MyTcpSocket(QObject* parent = nullptr);
     bool connectStart(QString ip, quint16 port);
-    bool sendMessage(DataPkg msg);
 
 private:
     PkgHandler* handler;
@@ -22,6 +22,10 @@ signals:
     void sendFileList(QStringList list);
     void sendFileHeader(QString fileName, quint64 fileCount);
     void sendFileData(quint64 fileID, QByteArray fileData);
+
+public slots:
+    bool sendMessage(DataPkg& msg);
+
 private slots:
     void onReadyRead();
     void onConnected();
