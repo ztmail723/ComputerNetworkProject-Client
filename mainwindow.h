@@ -6,12 +6,14 @@
 #include <QMainWindow>
 #include <QStandardItemModel>
 QT_BEGIN_NAMESPACE
-namespace Ui {
+namespace Ui
+{
 class MainWindow;
 }
 QT_END_NAMESPACE
 
-class MainWindow : public QMainWindow {
+class MainWindow : public QMainWindow
+{
     Q_OBJECT
 
 public:
@@ -27,9 +29,11 @@ private slots:
     void getFileHeader(QString fileName, quint64 fileCount);
     void getFileData(quint64 fileID, QByteArray fileData);
 
+    void on_pushButton_receiveReq_clicked();
+
 private:
     Ui::MainWindow* ui;
     MyTcpSocket* socket;
-    QStandardItemModel* itemModel;
+    //QStandardItemModel* itemModel;
 };
 #endif // MAINWINDOW_H

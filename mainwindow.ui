@@ -129,7 +129,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QListView" name="fileListView"/>
+       <widget class="QListWidget" name="filelistWidget"/>
       </item>
       <item>
        <widget class="QPushButton" name="pushButton_refresh">

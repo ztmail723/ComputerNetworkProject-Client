@@ -13,7 +13,7 @@ public:
     MyTcpSocket(QObject* parent = nullptr);
     bool connectStart(QString ip, quint16 port);
 
-private:
+public:
     PkgHandler* handler;
     PkgSender* sender;
 
