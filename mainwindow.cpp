@@ -57,7 +57,9 @@ void MainWindow::getFileList(QStringList list)
 
 void MainWindow::getFileHeader(QString fileName, quint64 fileCount)
 {
-    ;
+    ui->progressBar->reset();
+    ui->label_nowfile->setText(fileName + "(共" + fileCount + ")段");
+    socket->sender->send1003(ui->lineEdit_User->text(), 0);
 }
 
 void MainWindow::getFileData(quint64 fileID, QByteArray fileData, bool isFinished)
