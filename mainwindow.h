@@ -27,7 +27,7 @@ private slots:
 
     void getFileList(QStringList list);
     void getFileHeader(QString fileName, quint64 fileCount);
-    void getFileData(quint64 fileID, QByteArray fileData);
+    void getFileData(quint64 fileID, QByteArray fileData, bool isFinished);
 
     void on_pushButton_receiveReq_clicked();
 

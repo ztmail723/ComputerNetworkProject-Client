@@ -60,11 +60,19 @@ void MainWindow::getFileHeader(QString fileName, quint64 fileCount)
     ;
 }
 
-void MainWindow::getFileData(quint64 fileID, QByteArray fileData)
+void MainWindow::getFileData(quint64 fileID, QByteArray fileData, bool isFinished)
 {
     QMessageBox msgBox;
-    msgBox.setText("连接成功");
-    msgBox.exec();
+    if (isFinished)
+    {
+        ui->progressBar->setValue(100);
+        msgBox.setText("接收完毕");
+        msgBox.exec();
+    }
+    else
+    {
+        ui->progressBar->setValue(fileID * 100 / socket->handler->getFileCnt());
+    }
 }
 
 void MainWindow::on_pushButton_receiveReq_clicked()
