@@ -11,7 +11,8 @@ PkgHandler::PkgHandler(MyTcpSocket* socket)
 
 void PkgHandler::handle(DataPkg& pkg)
 {
-    switch (pkg.ID) {
+    switch (pkg.ID)
+    {
     case 2001:
         handle2001(pkg);
         break;
@@ -26,10 +27,16 @@ void PkgHandler::handle(DataPkg& pkg)
     }
 }
 
+quint64 PkgHandler::getFileCnt()
+{
+    return this->nowFileCount;
+}
+
 void PkgHandler::handle2001(DataPkg& pkg) //文件列表
 {
     QStringList list;
-    for (QVariant& i : pkg.data) {
+    for (QVariant& i : pkg.data)
+    {
         list.append(i.toString());
     }
     emit sendFileList(list);
@@ -49,10 +56,13 @@ void PkgHandler::handle2003(DataPkg& pkg)
 {
     quint64 fileID = pkg.data[0].toUInt();
     QByteArray fileData = pkg.data[1].toByteArray();
+    bool isFinished = false;
     this->nowFile->write(fileData);
-    if (fileID == nowFileCount) {
+    if (fileID == nowFileCount)
+    {
         this->nowFile->close();
         delete this->nowFile;
+        isFinished = true;
     }
-    emit sendFileData(fileID, fileData);
+    emit sendFileData(fileID, fileData, isFinished);
 }

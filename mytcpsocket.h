@@ -21,7 +21,7 @@ signals:
     void newMessage(DataPkg msg);
     void sendFileList(QStringList list);
     void sendFileHeader(QString fileName, quint64 fileCount);
-    void sendFileData(quint64 fileID, QByteArray fileData);
+    void sendFileData(quint64 fileID, QByteArray fileData, bool isFinished);
 
 public slots:
     bool sendMessage(DataPkg& msg);

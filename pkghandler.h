@@ -5,12 +5,13 @@
 #include <QFile>
 
 class MyTcpSocket;
-class PkgHandler : public QObject {
+class PkgHandler : public QObject
+{
     Q_OBJECT
 public:
     explicit PkgHandler(MyTcpSocket* socket);
     void handle(DataPkg& pkg);
-
+    quint64 getFileCnt();
 private:
     QFile* nowFile;
     quint64 nowFileCount;
@@ -23,7 +24,7 @@ private:
 signals:
     void sendFileList(QStringList list);
     void sendFileHeader(QString fileName, quint64 fileCount);
-    void sendFileData(quint64 fileID, QByteArray fileData);
+    void sendFileData(quint64 fileID, QByteArray fileData, bool isFinished);
 };
 
 #endif // PKGHANDLER_H
