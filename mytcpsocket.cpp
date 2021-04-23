@@ -16,8 +16,7 @@ MyTcpSocket::MyTcpSocket(QObject* parent)
 bool MyTcpSocket::connectStart(QString ip, quint16 port)
 {
     this->connectToHost(ip, port); //开始连接
-    if (!this->waitForConnected(20000))
-    {
+    if (!this->waitForConnected(20000)) {
         qDebug() << "客户端连接失败" /*<< Qt::endl*/; //等待一段时间，如果连接失败则停止连接
         return false;
     }
@@ -35,6 +34,7 @@ bool MyTcpSocket::sendMessage(DataPkg& pkg)
 
 void MyTcpSocket::onReadyRead()
 {
+    qDebug() << "客户端收到新数据";
     QByteArray array = this->readAll();
     QDataStream dts(&array, QIODevice::ReadOnly);
     DataPkg pkg;

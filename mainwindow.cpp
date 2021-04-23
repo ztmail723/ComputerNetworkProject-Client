@@ -11,6 +11,9 @@ MainWindow::MainWindow(QWidget* parent)
 {
     ui->setupUi(this);
     socket = new MyTcpSocket(this);
+    connect(socket, &MyTcpSocket::sendFileList, this, &MainWindow::getFileList);
+    connect(socket, &MyTcpSocket::sendFileData, this, &MainWindow::getFileData);
+    connect(socket, &MyTcpSocket::sendFileHeader, this, &MainWindow::getFileHeader);
     //itemModel = new QStandardItemModel(this);
     //ui->fileListView->setModel(itemModel);
 }
@@ -24,16 +27,13 @@ void MainWindow::on_pushButton_clicked()
 {
     ui->pushButton->setDisabled(true);
     bool flag = socket->connectStart(ui->lineEdit_Server->text(), quint16(ui->lineEdit_Port->text().toUInt()));
-    if (flag)
-    {
+    if (flag) {
         ui->pushButton_refresh->setEnabled(true);
         ui->pushButton_receiveReq->setEnabled(true);
         QMessageBox msgBox;
         msgBox.setText("连接成功");
         msgBox.exec();
-    }
-    else
-    {
+    } else {
         QMessageBox msgBox;
         msgBox.setText("连接失败，请重试！");
         msgBox.exec();
@@ -49,8 +49,7 @@ void MainWindow::on_pushButton_refresh_clicked()
 void MainWindow::getFileList(QStringList list)
 {
     ui->filelistWidget->clear();
-    for (auto& i : list)
-    {
+    for (auto& i : list) {
         ui->filelistWidget->addItem(i);
     }
 }
@@ -58,21 +57,18 @@ void MainWindow::getFileList(QStringList list)
 void MainWindow::getFileHeader(QString fileName, quint64 fileCount)
 {
     ui->progressBar->reset();
-    ui->label_nowfile->setText(fileName + "(共" + fileCount + ")段");
+    ui->label_nowfile->setText(fileName + "(共" + QString::number(fileCount) + ")段");
     socket->sender->send1003(ui->lineEdit_User->text(), 0);
 }
 
 void MainWindow::getFileData(quint64 fileID, QByteArray fileData, bool isFinished)
 {
     QMessageBox msgBox;
-    if (isFinished)
-    {
+    if (isFinished) {
         ui->progressBar->setValue(100);
         msgBox.setText("接收完毕");
         msgBox.exec();
-    }
-    else
-    {
+    } else {
         ui->progressBar->setValue(fileID * 100 / socket->handler->getFileCnt());
     }
 }
