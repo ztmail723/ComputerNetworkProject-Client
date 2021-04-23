@@ -12,6 +12,5 @@ public:
     friend QDataStream& operator<<(QDataStream& output, const DataPkg& data); //序列化
     friend QDataStream& operator>>(QDataStream& input, DataPkg& data); //反序列化
 };
-Q_DECLARE_METATYPE(DataPkg)
 
 #endif // DATAPKG_H
