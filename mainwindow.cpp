@@ -57,8 +57,8 @@ void MainWindow::getFileList(QStringList list)
 void MainWindow::getFileHeader(QString fileName, quint64 fileCount)
 {
     ui->progressBar->reset();
-    ui->label_nowfile->setText(fileName + "(共" + QString::number(fileCount) + ")段");
-    socket->sender->send1003(ui->lineEdit_User->text(), 0);
+    ui->label_nowfile->setText(fileName + "(共" + QString::number(fileCount) + "段)");
+    socket->sender->send1003(ui->lineEdit_User->text(), 1);
 }
 
 void MainWindow::getFileData(quint64 fileID, QByteArray fileData, bool isFinished)
@@ -66,15 +66,18 @@ void MainWindow::getFileData(quint64 fileID, QByteArray fileData, bool isFinishe
     QMessageBox msgBox;
     if (isFinished) {
         ui->progressBar->setValue(100);
+        ui->pushButton_receiveReq->setDisabled(false);
         msgBox.setText("接收完毕");
         msgBox.exec();
     } else {
-        ui->progressBar->setValue(fileID * 100 / socket->handler->getFileCnt());
+        socket->sender->send1003(ui->lineEdit_User->text(), fileID);
+        ui->progressBar->setValue(int((fileID * 100 / socket->handler->getFileCnt())));
     }
 }
 
 void MainWindow::on_pushButton_receiveReq_clicked()
 {
     auto selected = ui->filelistWidget->selectedItems().at(0);
+    ui->pushButton_receiveReq->setDisabled(true);
     socket->sender->send1002(ui->lineEdit_User->text(), selected->text());
 }
